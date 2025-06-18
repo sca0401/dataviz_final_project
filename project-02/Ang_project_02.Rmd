@@ -1,0 +1,180 @@
+---
+title: "Mini-Project 02"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+    toc_float: true
+---
+
+# Data Visualization Project 02
+
+_revised version of mini-project 02 goes here_
+---
+title: "dataviz_mini-project_02"
+author: "Sidney Ang"
+date: "2025-06-12"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+# Data Visualization 
+
+> Sidney Ang. 
+
+## Mini-Project 2
+
+Description of your project goes here. 
+You can include a motivation, summary of findings, and description of the data below.
+
+I would like to show the certain element of the data with graphical representation that will tell a story about the births during the time period. My motivation is to tell the back story of the numbers that being collected and a pattern that will be represented.
+
+```{r}
+installed.packages("crosstalk")
+```
+
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(crosstalk)
+library(sf)
+library(modeldata)
+
+```
+
+
+- Item 1
+
+Create at least 3 appropriate visualizations based on the datasets you explore:
+
+Include at least 1 interactive plot (make sure you save a self-contained HTML version of it as well)
+
+
+```{r}
+us_births_00_14 <- read_excel("data/us_births_00_14_month_name.xlsx")
+
+us_births_00_14
+```
+
+
+```{r}
+birth_month <- SharedData$new(us_births_00_14,
+                              key = ~month_name,
+                              group = 'Birth Month')
+```
+
+```{r}
+birth_month %>% 
+  plot_ly(x = ~year, y = ~month_name,
+         hoverinfo = "text, year",
+         text = ~births) %>% 
+  highlight(selectize = T) 
+```
+
+
+- Item 2
+
+
+Include at least 1 spatial visualization (make sure to include the shapefiles in the data/ subfolder)
+
+This part of the project will be exploring the shapefiles using the data from Official State of Florida Data Portal. I am going to be looking into one of Florida county named Polk.
+
+
+```{r}
+loc_schools <- "C:/Users/sidan/Downloads/dataviz_mini-project_02/dataviz_mini-project_02/data/Public_Private_Schools_in_Florida-2017/gc_schools_sep17.shp"
+
+fla_schools <- read_sf(loc_schools, quiet = TRUE)
+
+
+ggplot() + geom_sf(data = fla_schools, aes(color = OP_CLASS), alpha = 0.5) 
+```
+focusing on the county of Polk county located in the central part of Florida State. Looking for the distribution of the school inside of this county.
+
+I have to located the shapefile for the state of Florida located at "https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html#:~:text=The%20cartographic%20boundary%20files%20are,new%20Cartographic%20Boundary%20File%20page."
+
+
+
+Include at least 1 visualization of a model (for example, a linear model and its associated coefficients plot)
+
+
+Scatterplots and regression lines in R
+
+Exploring does the length of the flipper in penguins has a relationship of the bill length of the animal.
+
+```{r}
+view(penguins)
+pen <- penguins
+```
+
+```{r}
+ggplot(pen, aes(x = flipper_length_mm,
+                     y = bill_length_mm)) +
+  geom_point(size = 2,
+             color = "red",
+             shape = "square",
+             alpha = 0.5) +
+  geom_smooth(method = "lm",
+              se = FALSE,
+              color = "blue")
+```
+
+Going back to the original to explore other means using the scatterplot and changing the linear regression.
+
+
+
+```{r}
+ggplot(pen, aes(x = flipper_length_mm,
+                     y = bill_length_mm)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              se = FALSE)
+
+```
+
+
+```{r}
+lm(bill_length_mm ~ flipper_length_mm, data = penguins)
+```
+
+
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm,
+                     y = bill_length_mm,
+                     colour = island)) +
+  geom_point() +
+  scale_color_brewer(palette = "Dark2")
+```
+
+
+```{r}
+table(penguins$species,
+      penguins$island)
+```
+
+
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm,
+                     y = bill_length_mm,
+                     colour = species)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              se = FALSE) +
+  scale_color_brewer(palette = "Dark2") +
+  labs(x = "Flipper length",
+       y = "Bill lenght",
+       color = "Species",
+       title = "Penguin Measurement") +
+  theme_minimal()
+
+```
+
+```{r}
+
+```
+

@@ -17,6 +17,8 @@ output: html_document
 
 This assignment is intended to demonstrate some of skills you have learned in the course so far, and to put into practice the principles of data visualization you have explored in the different provided materials.
 
+testing
+
 ```{r}
 installed.packages("rnaturalearth")
 installed.packages("rnaturalearthdata")
