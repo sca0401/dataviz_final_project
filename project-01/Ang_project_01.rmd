@@ -8,5 +8,144 @@ output:
 ---
 
 # Data Visualization Project 01
+---
+title: "Data Visualization Mini-Project 1"
+author: "Sidney Ang"
+date: "2025-05-29"
+output: html_document
+---
+
+This assignment is intended to demonstrate some of skills you have learned in the course so far, and to put into practice the principles of data visualization you have explored in the different provided materials.
+
+```{r}
+installed.packages("rnaturalearth")
+installed.packages("rnaturalearthdata")
+```
+
+
+```{r}
+library(readxl)
+library(tidyverse)
+library(dplyr)
+```
+
+
+```{r}
+Project_mini <- index_score_clean_second_pass <- read_excel("C:/Data Visualization Mini-Project 1/data/index score -clean second pass.xlsx")
+
+View(Project_mini)
+dim(Project_mini)
+Project_mini
+```
+```{r}
+year2022 <- Project_mini %>% 
+  filter(Year== "2022")
+year2022
+```
+Investigate another dataset from year 2021.
+
+```{r}
+year2021 <- Project_mini %>% filter(Year== "2021")
+year2021
+```
+
+```{r}
+year2020 <- Project_mini %>% 
+  filter(Year== "2020")
+year2020
+```
+
+```{r}
+year2019 <- Project_mini %>% 
+  filter(Year== "2019")
+year2019
+```
+
+
+
+Data wrangle counting how many countries are located in each region.
+
+```{r}
+countries_region <- Project_mini %>%
+  filter(Year == 2022) %>% 
+   group_by(World_Bank_Region) %>% 
+  summarise(total = n())
+countries_region
+```
+
+
+Make the data easily manage by data wrangling by filtering only the Year 2022 in the data frame.
+
+```{r}
+my_df_year <- Project_mini %>% 
+  filter(Year %in% c(2022), Countries %in% c("Angola", "Australia", "Philippines", "Nigeria","China", "Germany", "United States", "Hong Kong SAR, China"))
+view(my_df_year)
+my_df_year
+```
+
+Next, we select a few columns that we like to see and investigate.
+
+
+```{r}
+j1 <- ggplot(my_df_year, mapping = aes(y = World_Bank_Region, x = RANK, color = Countries))
+
+j1 + geom_point() + geom_point(size = 5, shape = 10)
+```
+
+Using ggplot to visually check the data.
+
+```{r}
+w1 <- ggplot(year2022, mapping = aes(x = Sound_Money_Rank,
+                                   y = Freedom_to_trade_internationally_Rank, Countries = "Angola")) + geom_point() + geom_smooth(method = "loess") + ggtitle("Year2022") + geom_point(fill = "black", color = "black", size = 1, shape = 21)
+w1
+```
+
+```{r}
+w2 <- ggplot(year2021, mapping = aes(x = Sound_Money_Rank,
+                                   y = Freedom_to_trade_internationally_Rank)) + geom_point() + geom_smooth(method = "loess") + ggtitle("Year 2021") + geom_point(fill = "black", color = "black", size = 2, shape = 21)
+w2
+```
+
+```{r}
+w3 <- ggplot(year2020, mapping = aes(x = Sound_Money_Rank,
+                                   y = Freedom_to_trade_internationally_Rank)) + geom_point() + geom_smooth(method = "loess")+ ggtitle("Year 2020") + geom_point(fill = "black", color = "black", size = 2, shape = 21)
+w3
+```
+ 
+```{r}
+w4 <- ggplot(year2019, mapping = aes(x = Sound_Money_Rank,
+                                   y = Freedom_to_trade_internationally_Rank)) + geom_point() + geom_smooth(method = "loess") + ggtitle("Year 2019") +geom_point(fill = "Black", color = "black", size = 2, shape = 21)
+w4
+```
+
+
+```{r}
+ggplot() +
+  geom_point(data = year2022, aes(x = Sound_Money_Rank,
+                                   y = Freedom_to_trade_internationally_Rank), 
+             fill = "dark green", color = "black", size = 2, shape = 21) + 
+  geom_point(data = year2021, aes(x = Sound_Money_Rank,
+                                   y = Freedom_to_trade_internationally_Rank), fill = "purple", color = "black", size = 2, shape = 21) + ggtitle("Year 2022 and 2021")
+  
+```
+```{r}
+b1 <- ggplot(data = year2022, aes(x = Sound_Money_Rank,
+                                   y = Freedom_to_trade_internationally_Rank), 
+             fill = "Blue", color = RANK, size = 2, shape = 21)
+b1 + geom_point() + geom_smooth(method = "gam") + ggtitle("Year 2022")
+```
+
+```{r}
+h <- Project_mini %>% 
+  filter(Year %in% c(1970:2022), Countries == "Angola") %>% na.omit(Project_mini)
+h
+```
+
+```{r}
+Angola_line_of_progress <- ggplot(data = h, mapping = aes(x = Year, y = RANK))
+Angola_line_of_progress <- Angola_line_of_progress + geom_line(aes(color=Year))
+Angola_line_of_progress + ggtitle("Angola history ranking")
+```
+
 
 _revised version of mini-project 01 goes here_
