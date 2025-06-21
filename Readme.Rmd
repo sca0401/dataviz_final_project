@@ -1,0 +1,33 @@
+---
+title: "Readme"
+output: html_document
+---
+
+
+
+## Mini-Project 1
+
+Project 1 was to use the new skill of this course investigating the financial problem that most African countries facing going into the new century.  The data that I am looking into contains metric from how the goverment handle money and the judicial branch, and finally the people health.
+
+### Summary of findings:
+
+- What are the ranking of the countries randomly selective compare to Angola.
+- Does the improvement of the financial investment of the goverment pull the country of poverty.
+- Country like the Unites States, Canada, Singapore, and Hong Kong became more advance by what indicator.
+
+### Description of data:
+
+- The dataset includes the following columns:
+-- Country
+--- Australia
+--- Brazil
+--- China
+--- France
+--- Germany
+--- India
+--- Japan
+--- Russia
+--- UK
+--- US
+-- Year
+--- 1970-2020
